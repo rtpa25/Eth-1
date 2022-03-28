@@ -37,4 +37,12 @@ describe('Inbox', () => {
     const message = await inbox.methods.message().call(); //first set of parens is basically a place to pass in arguments to the function and the second is basically details about that operation either it is calling a fucntion to retrive some data from the blockchain or it is a transaction
     assert.equal(message, 'Hi there!');
   });
+
+  it('can change the message', async () => {
+    await inbox.methods
+      .setMessage('Bye There!')
+      .send({ from: accounts[0], gas: '1000000' });
+    const message = await inbox.methods.message().call();
+    assert.equal(message, 'Bye There!');
+  });
 });
